@@ -9,7 +9,7 @@ This package demonstrates 3 different implementations of a threadsafe global cou
 2. **CounterMutex** uses `sync.RWMutex`.
 3. **CounterChannel** serializes all reads and writes inside 1 goroutine with 2 channels.
 
-This was written to accompany the blog post [Getting started with Go Concurrency](https://jldec.me/getting-started-with-go-concurrency).
+This was written to accompany the blog post [Getting started with Goroutines and channels](https://jldec.me/getting-started-with-go-part-3-goroutines-and-channels).
 
 All 3 types implement the Counter interface:
 
