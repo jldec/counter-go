@@ -45,7 +45,7 @@ func test1(cnt counter.Counter, t *testing.T) {
 	val := cnt.Get()
 
 	if val != 0 {
-		t.Errorf("Inital value: %d\nexpected: 0", val)
+		t.Errorf("Initial value: %d\nexpected: 0", val)
 	}
 
 	cnt.Inc()
@@ -58,10 +58,21 @@ func test1(cnt counter.Counter, t *testing.T) {
 		t.Errorf("After 3x Inc() value: %d\nexpected: 3", val)
 	}
 
+	cnt.Dec()
+
 	val = cnt.Get()
 
-	if val != 3 {
-		t.Errorf("After 3x Inc() + 1 Get() value: %d\nexpected: 3", val)
+	if val != 2 {
+		t.Errorf("After 3x Inc() and 1x Dec() value: %d\nexpected: 2", val)
+	}
+
+	cnt.Dec()
+	cnt.Dec()
+
+	val = cnt.Get()
+
+	if val != 0 {
+		t.Errorf("After 3x Inc() and 3x Dec() value: %d\nexpected: 0", val)
 	}
 }
 

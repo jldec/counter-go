@@ -23,9 +23,12 @@ func NewCounterChannel() *CounterChannel {
 			select {
 			// Reading from readCh is equivalent to reading count.
 			case c.readCh <- count:
-			// Writing to the writeCh increments count.
-			case <-c.writeCh:
-				count++
+			case delta := <-c.writeCh:
+				if delta < 0 && count > 0 {
+					count--
+				} else if delta > 0 {
+					count++
+				}
 			}
 		}
 	}()
@@ -33,10 +36,16 @@ func NewCounterChannel() *CounterChannel {
 	return c
 }
 
-// Increment counter by pushing an arbitrary int to the write channel.
+// Increment counter by pushing 1 to the write channel.
 func (c *CounterChannel) Inc() {
 	c.check()
 	c.writeCh <- 1
+}
+
+// Decrement counter by pushing -1 to the write channel.
+func (c *CounterChannel) Dec() {
+	c.check()
+	c.writeCh <- -1
 }
 
 // Get current counter value from the read channel.

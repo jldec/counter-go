@@ -26,3 +26,9 @@ func (c *CounterMutex) Get() (ret uint64) {
 	c.rw.RUnlock()
 	return
 }
+
+func (c *CounterMutex) Dec() {
+	c.rw.Lock()
+	defer c.rw.Unlock()
+	c.count--
+}

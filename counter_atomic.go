@@ -14,6 +14,11 @@ func (c *CounterAtomic) Inc() {
 	atomic.AddUint64(&c.count, 1)
 }
 
+// Decrement counter
+func (c *CounterAtomic) Dec() {
+	atomic.AddUint64(&c.count, ^uint64(0))
+}
+
 // Get current counter value
 func (c *CounterAtomic) Get() uint64 {
 	return atomic.LoadUint64(&c.count)
